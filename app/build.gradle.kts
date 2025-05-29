@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.cue007.cuebookapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.cue007.cuebookapp"
