@@ -1,9 +1,12 @@
 package com.cue007.cuebookapp
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cue007.cuebookapp.ui.theme.CueBookAppTheme
@@ -39,13 +44,34 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+private val image_ids = listOf(
+    R.drawable.dice_1,
+    R.drawable.dice_2,
+    R.drawable.dice_3,
+    R.drawable.dice_4,
+    R.drawable.dice_5,
+    R.drawable.dice_6
+)
+
 @Composable
 fun TestLayout(name: String, modifier: Modifier = Modifier) {
     Row(
         modifier = Modifier.fillMaxSize()
     ) {
-        Column(modifier = Modifier.fillMaxHeight().width(100.dp).background(Color.Yellow)) {
-            Text(text = "Column 1")
+        Column(modifier = Modifier.fillMaxHeight()
+            .width(100.dp)
+            .background(Color.Yellow),
+            verticalArrangement = Arrangement.SpaceEvenly) {
+            repeat(6) {
+                val context = LocalContext.current
+                Image(
+                    painter = painterResource(image_ids[it]),
+                    contentDescription = "Dice $it",
+                    modifier.clickable {
+                        Toast.makeText(context, "Click $it", Toast.LENGTH_SHORT).show()
+                    }
+                )
+            }
         }
         Column(modifier = Modifier.fillMaxHeight().width(100.dp).background(Color.Gray)) {
             Text(text = "Column 2")
@@ -58,10 +84,18 @@ fun TestLayout(name: String, modifier: Modifier = Modifier) {
     }
 }
 
+//test another screen
+@Composable
+fun TestLoginScreen(modifier: Modifier = Modifier){
+
+}
+
+
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun TestPreview() {
     CueBookAppTheme {
         TestLayout("Android")
     }
 }
+
